@@ -2,7 +2,7 @@ package entities
 
 import "testing"
 
-func TestEquals(t *testing.T) {
+func TestTagEquals(t *testing.T) {
 	type args struct {
 		t1 []Tag
 		t2 []Tag
@@ -50,7 +50,7 @@ func TestEquals(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Equals(tt.args.t1, tt.args.t2); got != tt.want {
+			if got := TagEquals(tt.args.t1, tt.args.t2); got != tt.want {
 				t.Errorf("Equals() = %v, want %v", got, tt.want)
 			}
 		})

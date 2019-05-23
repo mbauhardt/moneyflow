@@ -20,7 +20,7 @@ func TagToRemove(name string) Tag {
 	return Tag{modifier: remove, name: name}
 }
 
-func Equals(t1, t2 []Tag) bool {
+func TagEquals(t1, t2 []Tag) bool {
 	if len(t1) != len(t2) {
 		return false
 	}

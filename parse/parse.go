@@ -1,7 +1,9 @@
 package parse
 
 import (
+	"errors"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/mbauhardt/moneyflow/entities"
@@ -34,4 +36,22 @@ func ParseTagsToRemove(commandline string) []entities.Tag {
 		tags = append(tags, entities.TagToRemove(parsedName))
 	}
 	return tags
+}
+
+func ParseMoney(commandline string) (*entities.Money, error) {
+	moneyRegex, _ := regexp.Compile("(\\-){0,1}\\$[0-9]+(\\s|$)")
+	parsedMoneyArray := moneyRegex.FindAllString(commandline, -1)
+	if len(parsedMoneyArray) == 0 {
+		return nil, nil
+	}
+	if len(parsedMoneyArray) > 1 {
+		return nil, errors.New("More than one money is detected: " + strings.Join(parsedMoneyArray, ""))
+	}
+	parsedMoney := strings.Replace(parsedMoneyArray[0], "$", "", 1)
+	parsedValue := strings.Trim(parsedMoney[0:len(parsedMoney)], " ")
+	n, err := strconv.ParseInt(parsedValue, 0, 64)
+	if err != nil {
+		return nil, err
+	}
+	return &entities.Money{Value: n}, nil
 }
