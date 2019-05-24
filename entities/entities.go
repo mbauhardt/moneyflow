@@ -1,5 +1,8 @@
 package entities
 
+// ************
+// tag section
+// ************
 type TagModifier string
 
 const (
@@ -33,4 +36,22 @@ func TagEquals(t1, t2 []Tag) bool {
 		}
 	}
 	return true
+}
+
+// **************
+// money section
+// **************
+
+type Money struct {
+	Value int64
+}
+
+func MoneyEquals(m1, m2 *Money) bool {
+	if m1 == nil && m2 == nil {
+		return true
+	}
+	if m1 == nil || m2 == nil {
+		return false
+	}
+	return m1.Value == m2.Value
 }
