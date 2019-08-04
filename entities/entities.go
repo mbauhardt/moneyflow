@@ -11,16 +11,16 @@ const (
 )
 
 type Tag struct {
-	modifier TagModifier
-	name     string
+	Modifier TagModifier
+	Name     string
 }
 
 func TagToAdd(name string) Tag {
-	return Tag{modifier: add, name: name}
+	return Tag{Modifier: add, Name: name}
 }
 
 func TagToRemove(name string) Tag {
-	return Tag{modifier: remove, name: name}
+	return Tag{Modifier: remove, Name: name}
 }
 
 func TagEquals(t1, t2 []Tag) bool {
@@ -28,14 +28,18 @@ func TagEquals(t1, t2 []Tag) bool {
 		return false
 	}
 	for i, v := range t1 {
-		if v.modifier != t2[i].modifier {
+		if v.Modifier != t2[i].Modifier {
 			return false
 		}
-		if v.name != t2[i].name {
+		if v.Name != t2[i].Name {
 			return false
 		}
 	}
 	return true
+}
+
+func ToString(t *Tag) string {
+	return string(t.Modifier) + t.Name
 }
 
 // **************
@@ -47,6 +51,24 @@ type Money struct {
 }
 
 func MoneyEquals(m1, m2 *Money) bool {
+	if m1 == nil && m2 == nil {
+		return true
+	}
+	if m1 == nil || m2 == nil {
+		return false
+	}
+	return m1.Value == m2.Value
+}
+
+// **************
+// description section
+// **************
+
+type Description struct {
+	Value string
+}
+
+func DescriptionEquals(m1, m2 *Description) bool {
 	if m1 == nil && m2 == nil {
 		return true
 	}

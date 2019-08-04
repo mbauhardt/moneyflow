@@ -66,3 +66,22 @@ func TestParseMoney(t *testing.T) {
 		})
 	}
 }
+
+func TestParseDescription(t *testing.T) {
+	tests := []struct {
+		name     string
+		in       string
+		expected *entities.Description
+	}{
+		{"Description Only", "foo bar", &entities.Description{Value: "foo bar"}},
+		{"Description with tags", "foo bar -hello +world", &entities.Description{Value: "foo bar"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := ParseDescription(tt.in)
+			if !entities.DescriptionEquals(got, tt.expected) {
+				t.Errorf("ParseDescription(%q) == %q, want %q", tt.in, got, tt.expected)
+			}
+		})
+	}
+}

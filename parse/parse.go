@@ -55,3 +55,13 @@ func ParseMoney(commandline string) (*entities.Money, error) {
 	}
 	return &entities.Money{Value: n}, nil
 }
+
+func ParseDescription(s string) *entities.Description {
+	tags := ParseTags(s)
+	d := entities.Description{Value: s}
+	for _, t := range tags {
+		d.Value = strings.Trim(strings.ReplaceAll(d.Value, entities.ToString(&t), ""), " ")
+	}
+
+	return &d
+}
