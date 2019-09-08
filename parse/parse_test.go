@@ -75,10 +75,15 @@ func TestParseDescription(t *testing.T) {
 	}{
 		{"Description Only", "foo bar", &entities.Description{Value: "foo bar"}},
 		{"Description with tags", "foo bar -hello +world", &entities.Description{Value: "foo bar"}},
+		{"Description with tags and money", "foo bar -hello +world $300", &entities.Description{Value: "foo bar"}},
+		{"Description without tags but with neg money", "foo bar -$300", &entities.Description{Value: "foo bar"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := ParseDescription(tt.in)
+			got,e := ParseDescription(tt.in)
+			if e != nil {
+				t.Errorf("unexptected error while parse descripotion detected %q", e)
+			}
 			if !entities.DescriptionEquals(got, tt.expected) {
 				t.Errorf("ParseDescription(%q) == %q, want %q", tt.in, got, tt.expected)
 			}

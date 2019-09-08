@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-
+	"fmt"
 	"github.com/mbauhardt/moneyflow/entities"
 )
 
@@ -56,12 +56,19 @@ func ParseMoney(commandline string) (*entities.Money, error) {
 	return &entities.Money{Value: n}, nil
 }
 
-func ParseDescription(s string) *entities.Description {
+func ParseDescription(s string) (*entities.Description, error) {
 	tags := ParseTags(s)
+	m,e := ParseMoney(s)
+	if e != nil {
+	  return nil, e
+	}
 	d := entities.Description{Value: s}
 	for _, t := range tags {
 		d.Value = strings.Trim(strings.ReplaceAll(d.Value, entities.ToString(&t), ""), " ")
 	}
-
-	return &d
+	if m != nil {
+	fmt.Println(entities.MoneyToString(m))
+		d.Value = strings.Trim(strings.ReplaceAll(d.Value, entities.MoneyToString(m), ""), " ")
+	}
+	return &d, nil
 }

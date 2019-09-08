@@ -1,5 +1,9 @@
 package entities
 
+import (
+	"strconv"
+)
+
 // ************
 // tag section
 // ************
@@ -60,6 +64,13 @@ func MoneyEquals(m1, m2 *Money) bool {
 	return m1.Value == m2.Value
 }
 
+func MoneyToString(m *Money) string {
+	if m.Value < 0 {
+		return "-$" + strconv.FormatInt(m.Value * -1, 10)
+	} else {
+		return "$" + strconv.FormatInt(m.Value, 10)
+	}
+}
 // **************
 // description section
 // **************
