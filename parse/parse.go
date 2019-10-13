@@ -5,7 +5,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"fmt"
 	"github.com/mbauhardt/moneyflow/entities"
 )
 
@@ -67,7 +66,6 @@ func ParseDescription(s string) (*entities.Description, error) {
 		d.Value = strings.Trim(strings.ReplaceAll(d.Value, entities.ToString(&t), ""), " ")
 	}
 	if m != nil {
-	fmt.Println(entities.MoneyToString(m))
 		d.Value = strings.Trim(strings.ReplaceAll(d.Value, entities.MoneyToString(m), ""), " ")
 	}
 	return &d, nil

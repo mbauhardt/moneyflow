@@ -12,7 +12,7 @@ type Environment struct {
 }
 
 type DatabaseDocument struct {
-	id    string
+	Id    string
 	money *entities.Money
 	desc  *string
 	tags  *[]entities.Tag
@@ -57,7 +57,23 @@ func NewDatabaseDocument(env *Environment) (*DatabaseDocument, error) {
 	if err5 != nil {
 		return nil, err5
 	}
-	return &DatabaseDocument{id: id}, nil
+	return &DatabaseDocument{Id: id}, nil
+}
+
+func SaveTags(env *Environment, doc *DatabaseDocument, tags []entities.Tag) (*DatabaseDocument, error) {
+	f, err := os.Create(env.DbPath + "/" + doc.Id + "/tags")
+	if err != nil {
+    		panic(err)
+	}
+	defer f.Close()
+	for _,t := range tags {
+		if t.Modifier == "+" {
+			f.WriteString(t.Name)
+			f.WriteString("\n")
+		}
+	}
+	f.Sync()
+	return &DatabaseDocument{Id: doc.Id}, nil
 }
 
 func exists(path string) bool {
