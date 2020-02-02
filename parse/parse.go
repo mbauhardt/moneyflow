@@ -70,3 +70,4 @@ func ParseDescription(s string) (*entities.Description, error) {
 	}
 	return &d, nil
 }
+

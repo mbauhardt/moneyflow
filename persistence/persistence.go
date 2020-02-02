@@ -14,9 +14,6 @@ type Environment struct {
 
 type DatabaseDocument struct {
 	Id    string
-	Money *entities.Money
-	desc  *string
-	tags  *[]entities.Tag
 }
 
 func Env() (*Environment, error) {
@@ -68,9 +65,19 @@ func SaveMoney(env *Environment, doc *DatabaseDocument, money *entities.Money) (
 	}
 	defer f.Close()
 	f.WriteString(fmt.Sprintf("%d\n", money.Value))
-	f.WriteString("\n")
 	f.Sync()
-	return &DatabaseDocument{Id: doc.Id, Money: money}, nil
+	return &DatabaseDocument{Id: doc.Id}, nil
+}
+
+func SaveDescription(env *Environment, doc *DatabaseDocument, desc *entities.Description) (*DatabaseDocument, error) {
+	f, err := os.Create(env.DbPath + "/" + doc.Id + "/description")
+	if err != nil {
+    		panic(err)
+	}
+	defer f.Close()
+	f.WriteString(fmt.Sprintf("%s\n", desc.Value))
+	f.Sync()
+	return &DatabaseDocument{Id: doc.Id}, nil
 }
 
 func SaveTags(env *Environment, doc *DatabaseDocument, tags []entities.Tag) (*DatabaseDocument, error) {
