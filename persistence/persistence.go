@@ -1,6 +1,7 @@
 package persistence
 
 import (
+	"fmt"
 	"errors"
 	"github.com/mbauhardt/moneyflow/entities"
 	"os"
@@ -13,7 +14,7 @@ type Environment struct {
 
 type DatabaseDocument struct {
 	Id    string
-	money *entities.Money
+	Money *entities.Money
 	desc  *string
 	tags  *[]entities.Tag
 }
@@ -58,6 +59,18 @@ func NewDatabaseDocument(env *Environment) (*DatabaseDocument, error) {
 		return nil, err5
 	}
 	return &DatabaseDocument{Id: id}, nil
+}
+
+func SaveMoney(env *Environment, doc *DatabaseDocument, money *entities.Money) (*DatabaseDocument, error) {
+	f, err := os.Create(env.DbPath + "/" + doc.Id + "/money")
+	if err != nil {
+    		panic(err)
+	}
+	defer f.Close()
+	f.WriteString(fmt.Sprintf("%d\n", money.Value))
+	f.WriteString("\n")
+	f.Sync()
+	return &DatabaseDocument{Id: doc.Id, Money: money}, nil
 }
 
 func SaveTags(env *Environment, doc *DatabaseDocument, tags []entities.Tag) (*DatabaseDocument, error) {

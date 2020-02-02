@@ -48,11 +48,11 @@ func TestParseMoney(t *testing.T) {
 		err      error
 	}{
 		{"AbsentMoney", "There is no money", nil, nil},
-		{"TwoTimesMoney", "foo $300 and $600", nil, errors.New("More than one money is detected: $300 $600")},
-		{"One Expense", "buy food -$800", &entities.Money{Value: -800}, nil},
-		{"One Expense in the middle of command", "buy food for -$800 abc", &entities.Money{Value: -800}, nil},
-		{"One Income", "rent $300", &entities.Money{Value: 300}, nil},
-		{"One Income in the middle", "rent $300 my flat", &entities.Money{Value: 300}, nil},
+		{"TwoTimesMoney", "foo €300 and €600", nil, errors.New("More than one money is detected: €300 €600")},
+		{"One Expense", "buy food -€800", &entities.Money{Value: -800}, nil},
+		{"One Expense in the middle of command", "buy food for -€800 abc", &entities.Money{Value: -800}, nil},
+		{"One Income", "rent €300", &entities.Money{Value: 300}, nil},
+		{"One Income in the middle", "rent €300 my flat", &entities.Money{Value: 300}, nil},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -75,8 +75,8 @@ func TestParseDescription(t *testing.T) {
 	}{
 		{"Description Only", "foo bar", &entities.Description{Value: "foo bar"}},
 		{"Description with tags", "foo bar -hello +world", &entities.Description{Value: "foo bar"}},
-		{"Description with tags and money", "foo bar -hello +world $300", &entities.Description{Value: "foo bar"}},
-		{"Description without tags but with neg money", "foo bar -$300", &entities.Description{Value: "foo bar"}},
+		{"Description with tags and money", "foo bar -hello +world €300", &entities.Description{Value: "foo bar"}},
+		{"Description without tags but with neg money", "foo bar -€300", &entities.Description{Value: "foo bar"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

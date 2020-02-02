@@ -38,7 +38,7 @@ func ParseTagsToRemove(commandline string) []entities.Tag {
 }
 
 func ParseMoney(commandline string) (*entities.Money, error) {
-	moneyRegex, _ := regexp.Compile("(\\-){0,1}\\$[0-9]+(\\s|$)")
+	moneyRegex, _ := regexp.Compile("(\\-){0,1}€[0-9]+(\\s|$)")
 	parsedMoneyArray := moneyRegex.FindAllString(commandline, -1)
 	if len(parsedMoneyArray) == 0 {
 		return nil, nil
@@ -46,7 +46,7 @@ func ParseMoney(commandline string) (*entities.Money, error) {
 	if len(parsedMoneyArray) > 1 {
 		return nil, errors.New("More than one money is detected: " + strings.Join(parsedMoneyArray, ""))
 	}
-	parsedMoney := strings.Replace(parsedMoneyArray[0], "$", "", 1)
+	parsedMoney := strings.Replace(parsedMoneyArray[0], "€", "", 1)
 	parsedValue := strings.Trim(parsedMoney[0:len(parsedMoney)], " ")
 	n, err := strconv.ParseInt(parsedValue, 0, 64)
 	if err != nil {

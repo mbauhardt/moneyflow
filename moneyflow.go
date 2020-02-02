@@ -25,7 +25,15 @@ func main() {
 		tags := parse.ParseTags(strings.Join(argsWithoutProg, " "))
 		persistence.SaveTags(env, doc, tags)
 
-		fmt.Println("Added new doc[" + doc.Id + "]"+desc)
+		money, merr := parse.ParseMoney(strings.Join(argsWithoutProg, " "))
+		if merr != nil {
+			panic(merr)
+		}
+		if money != nil {
+			persistence.SaveMoney(env, doc, money)
+	        }	
+
+		fmt.Println("Added new doc[" + doc.Id + "]")
 	} else {
 		fmt.Println("Unknown Command...");
 	}
