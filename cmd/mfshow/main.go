@@ -41,6 +41,10 @@ func printTags(folder string) {
 	fmt.Println()
 }
 
+func newline(folder string) {
+	fmt.Println()
+}
+
 func main() {
-	cmd.ScanStdin(printDescription, printMoney, printTags)
+	cmd.ScanStdin(printDescription, printMoney, printTags, newline)
 }
