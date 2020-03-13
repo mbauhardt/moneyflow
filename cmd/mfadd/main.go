@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/mbauhardt/moneyflow/persistence"
 	"github.com/mbauhardt/moneyflow/parse"
+	"github.com/mbauhardt/moneyflow/persistence"
 )
 
 func main() {

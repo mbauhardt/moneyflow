@@ -1,25 +1,26 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"io/ioutil"
 	"os"
-	"fmt"
-	"bufio"
 	"path/filepath"
+
 	"github.com/fatih/color"
 	"github.com/mbauhardt/moneyflow/cmd"
 )
 
 func printDescription(folder string) {
 	dat, err := ioutil.ReadFile(folder + "/description")
-    	cmd.Check(err)
-    	color.Cyan(filepath.Base(folder) + ". " + string(dat))
+	cmd.Check(err)
+	color.Cyan(filepath.Base(folder) + ". " + string(dat))
 }
 
 func printMoney(folder string) {
 	dat, err := ioutil.ReadFile(folder + "/money")
-    	cmd.Check(err)
-    	color.Yellow("€ " + string(dat))
+	cmd.Check(err)
+	color.Yellow("€ " + string(dat))
 }
 
 func printTags(folder string) {
@@ -28,15 +29,15 @@ func printTags(folder string) {
 	defer file.Close()
 
 	fileScanner := bufio.NewScanner(file)
-	c:= color.New(color.FgBlue)
+	c := color.New(color.FgBlue)
 	c.Print("# ")
 	b := false
 	for fileScanner.Scan() {
-		if (b) {
+		if b {
 			c.Print(", ")
 		}
 		b = true
-    		c.Print(fileScanner.Text())
+		c.Print(fileScanner.Text())
 	}
 	fmt.Println()
 }

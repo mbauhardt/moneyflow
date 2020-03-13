@@ -1,9 +1,10 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
+	"fmt"
+	"os"
+
 	"github.com/mbauhardt/moneyflow/cmd"
 )
 
@@ -14,7 +15,7 @@ func printTags(folder string) {
 
 	fileScanner := bufio.NewScanner(file)
 	for fileScanner.Scan() {
-    		fmt.Println(fileScanner.Text())
+		fmt.Println(fileScanner.Text())
 	}
 }
 

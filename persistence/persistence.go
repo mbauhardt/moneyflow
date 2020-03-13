@@ -1,11 +1,12 @@
 package persistence
 
 import (
-	"fmt"
 	"errors"
-	"github.com/mbauhardt/moneyflow/entities"
+	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/mbauhardt/moneyflow/entities"
 )
 
 type Environment struct {
@@ -13,7 +14,7 @@ type Environment struct {
 }
 
 type DatabaseDocument struct {
-	Id    string
+	Id string
 }
 
 func Env() (*Environment, error) {
@@ -61,7 +62,7 @@ func NewDatabaseDocument(env *Environment) (*DatabaseDocument, error) {
 func SaveMoney(env *Environment, doc *DatabaseDocument, money *entities.Money) (*DatabaseDocument, error) {
 	f, err := os.Create(env.DbPath + "/" + doc.Id + "/money")
 	if err != nil {
-    		panic(err)
+		panic(err)
 	}
 	defer f.Close()
 	f.WriteString(fmt.Sprintf("%d\n", money.Value))
@@ -72,7 +73,7 @@ func SaveMoney(env *Environment, doc *DatabaseDocument, money *entities.Money) (
 func SaveDescription(env *Environment, doc *DatabaseDocument, desc *entities.Description) (*DatabaseDocument, error) {
 	f, err := os.Create(env.DbPath + "/" + doc.Id + "/description")
 	if err != nil {
-    		panic(err)
+		panic(err)
 	}
 	defer f.Close()
 	f.WriteString(fmt.Sprintf("%s\n", desc.Value))
@@ -83,10 +84,10 @@ func SaveDescription(env *Environment, doc *DatabaseDocument, desc *entities.Des
 func SaveTags(env *Environment, doc *DatabaseDocument, tags []entities.Tag) (*DatabaseDocument, error) {
 	f, err := os.Create(env.DbPath + "/" + doc.Id + "/tags")
 	if err != nil {
-    		panic(err)
+		panic(err)
 	}
 	defer f.Close()
-	for _,t := range tags {
+	for _, t := range tags {
 		if t.Modifier == "+" {
 			f.WriteString(t.Name)
 			f.WriteString("\n")

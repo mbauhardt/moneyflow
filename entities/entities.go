@@ -66,11 +66,12 @@ func MoneyEquals(m1, m2 *Money) bool {
 
 func MoneyToString(m *Money) string {
 	if m.Value < 0 {
-		return "-€" + strconv.FormatInt(m.Value * -1, 10)
+		return "-€" + strconv.FormatInt(m.Value*-1, 10)
 	} else {
 		return "€" + strconv.FormatInt(m.Value, 10)
 	}
 }
+
 // **************
 // description section
 // **************

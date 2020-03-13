@@ -80,7 +80,7 @@ func TestParseDescription(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got,e := ParseDescription(tt.in)
+			got, e := ParseDescription(tt.in)
 			if e != nil {
 				t.Errorf("unexptected error while parse descripotion detected %q", e)
 			}
@@ -90,4 +90,3 @@ func TestParseDescription(t *testing.T) {
 		})
 	}
 }
-
