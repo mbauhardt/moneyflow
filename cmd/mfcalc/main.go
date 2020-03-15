@@ -6,19 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/fatih/color"
 	"github.com/mbauhardt/moneyflow/cmd"
 )
-
-func printMoney(folder string) {
-	dat, err := ioutil.ReadFile(folder + "/money")
-	cmd.Check(err)
-	color.Yellow("€ " + string(dat))
-}
-
-func newline(folder string) {
-	fmt.Println()
-}
 
 func main() {
 	var in int64
